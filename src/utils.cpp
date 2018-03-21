@@ -11,5 +11,10 @@ bool utils::IsNumber(std::string s)
   for(char c : s)
     if(!IsDigit(c))
       return false;
-    return true;
+    return s.length();
+}
+
+bool utils::IsComment(std::string s)
+{
+  return s[0] == '#';
 }

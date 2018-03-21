@@ -8,6 +8,7 @@ namespace utils
 
 bool IsDigit(char c);
 bool IsNumber(std::string s);
+bool IsComment(std::string s);
 
 } // Namespace utils
 
