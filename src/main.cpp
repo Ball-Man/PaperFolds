@@ -17,8 +17,8 @@ int main(int argn, char** args)
     return 0;
   }
 
-  int n = -1;
-  int exp;
+  int paper_k = -1;
+  int paper_exp;
 
   while(!fin.eof())
   {
@@ -29,10 +29,10 @@ int main(int argn, char** args)
     {
       if(utils::IsNumber(line))
       {
-        if(n == -1)
-          n = std::stoi(line);
+        if(paper_k == -1)
+          paper_k = std::stoi(line);
         else
-          exp = std::stoi(line); 
+          paper_exp = -std::stoi(line); 
       }
       else
       {
@@ -42,6 +42,36 @@ int main(int argn, char** args)
     }
   }
 
-  std::cout << n << " " << exp << "\n";
+  // Input from user
+  std::string line = "";
+  int dis_k,
+      dis_exp;
 
+  std::cout << "Insert here the distance. The program will calculate how many time you need to fold your paper in order to get there.\n"
+    << "Distances are in meters and are expressed as follows:\n"
+    << "k * 10 ^ exp\n\n"
+    << "  k factor: ";
+
+  // k input
+  std::getline(std::cin, line);
+  while(!utils::IsNumber(line))     // Check for errors
+  {
+    std::cout << "-- bad input, insert an natural number\n  k factor: ";
+    std::getline(std::cin, line);
+  }
+  dis_k = std::stoi(line);
+
+  std::cout << "  exp factor: ";
+
+  // exp input
+  std::getline(std::cin, line);
+  while(!utils::IsNumber(line))      // More check for errors
+  {
+    std::cout << "-- bad input, insert an natural number\n  exp factor: ";
+    std::getline(std::cin, line);
+  }
+  dis_exp = std::stoi(line);
+
+  // Test
+  std::cout << dis_k << " * 10 ^ " << dis_exp << "\n";
 }
