@@ -17,8 +17,7 @@ int main(int argn, char** args)
     return 0;
   }
 
-  int paper_k = -1;
-  int paper_exp;
+  utils::Factor paper = { -1 };
 
   while(!fin.eof())
   {
@@ -29,10 +28,10 @@ int main(int argn, char** args)
     {
       if(utils::IsNumber(line))
       {
-        if(paper_k == -1)
-          paper_k = std::stoi(line);
+        if(paper.k == -1)
+          paper.k = std::stoi(line);
         else
-          paper_exp = -std::stoi(line); 
+          paper.exp = std::stoi(line); 
       }
       else
       {
@@ -44,34 +43,44 @@ int main(int argn, char** args)
 
   // Input from user
   std::string line = "";
-  int dis_k,
-      dis_exp;
+  utils::Factor distance = { 10, 1 };
 
   std::cout << "Insert here the distance. The program will calculate how many time you need to fold your paper in order to get there.\n"
     << "Distances are in meters and are expressed as follows:\n"
     << "k * 10 ^ exp\n\n"
-    << "  k factor: ";
+    << "  k factor[10]: ";
 
   // k input
   std::getline(std::cin, line);
-  while(!utils::IsNumber(line))     // Check for errors
+  if(line.length())
   {
-    std::cout << "-- bad input, insert an natural number\n  k factor: ";
-    std::getline(std::cin, line);
+    while(!utils::IsNumber(line))     // Check for errors
+    {
+      std::cout << "-- bad input, insert an natural number\n  k factor: ";
+      std::getline(std::cin, line);
+    }
+    distance.k = std::stoi(line);
   }
-  dis_k = std::stoi(line);
 
-  std::cout << "  exp factor: ";
+  std::cout << "  exp factor[1]: ";
 
   // exp input
   std::getline(std::cin, line);
-  while(!utils::IsNumber(line))      // More check for errors
+  if(line.length())
   {
-    std::cout << "-- bad input, insert an natural number\n  exp factor: ";
-    std::getline(std::cin, line);
+    while(!utils::IsNumber(line))      // More check for errors
+    {
+      std::cout << "-- bad input, insert an natural number\n  exp factor: ";
+      std::getline(std::cin, line);
+    }
+    distance.exp = std::stoi(line);
   }
-  dis_exp = std::stoi(line);
 
-  // Test
-  std::cout << dis_k << " * 10 ^ " << dis_exp << "\n";
+  std::cout << "\nPaper thickness: " << paper.k << " * 10 ^ -" << paper.exp
+    << "\nDistance: " << distance.k << " * 10 ^ " << distance.exp
+    << "\nFolds:\n";
+
+  double res = utils::CalcFolds(paper, distance);
+  std::cout << "  Calculated value: " << res << "\n"
+    << "  Real value: " << std::ceil(res) << "\n";
 }

@@ -1,5 +1,6 @@
 #include <utils.h>
 #include <algorithm>
+#include <cmath>
 
 bool utils::IsDigit(char c)
 {
@@ -17,4 +18,10 @@ bool utils::IsNumber(std::string s)
 bool utils::IsComment(std::string s)
 {
   return s[0] == '#';
+}
+
+// Actual math behind the folds
+double utils::CalcFolds(Factor paper, Factor distance)
+{
+  return (paper.exp + distance.exp) * std::log2(paper.k) + std::log2(distance.k); 
 }
