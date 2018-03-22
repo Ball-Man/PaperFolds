@@ -4,7 +4,9 @@
 #include <math.h>
 #include <utils.h>
 
-constexpr char kConfigFile[] = "paper.config"; 
+constexpr char kConfigFile[] = "paper.config";
+constexpr int kDefaultDistanceK = 1;
+constexpr int kDefaultDistanceExp = 0;
 
 int main(int argn, char** args)
 {
@@ -43,12 +45,12 @@ int main(int argn, char** args)
 
   // Input from user
   std::string line = "";
-  utils::Factor distance = { 10, 1 };
+  utils::Factor distance = { kDefaultDistanceK, kDefaultDistanceExp };
 
   std::cout << "Insert here the distance. The program will calculate how many time you need to fold your paper in order to get there.\n"
     << "Distances are in meters and are expressed as follows:\n"
     << "k * 10 ^ exp\n\n"
-    << "  k factor[10]: ";
+    << "  k factor[" << kDefaultDistanceK << "]: ";
 
   // k input
   std::getline(std::cin, line);
@@ -62,7 +64,7 @@ int main(int argn, char** args)
     distance.k = std::stoi(line);
   }
 
-  std::cout << "  exp factor[1]: ";
+  std::cout << "  exp factor[" << kDefaultDistanceExp << "]: ";
 
   // exp input
   std::getline(std::cin, line);
